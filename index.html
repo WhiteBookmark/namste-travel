@@ -1,0 +1,951 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Namaste Travel & Tourism LLC</title>
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Header Styles */
+        .header {
+            background: white;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            transition: all 0.3s ease;
+        }
+
+        .nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 0;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .logo img {
+            height: 50px;
+            width: auto;
+        }
+
+        .logo-text {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: #C41E3A;
+        }
+
+        .nav-menu {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+        }
+
+        .nav-menu a {
+            text-decoration: none;
+            color: #333;
+            font-weight: 500;
+            transition: color 0.3s ease;
+        }
+
+        .nav-menu a:hover {
+            color: #C41E3A;
+        }
+
+        .contact-info {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            color: #C41E3A;
+            font-weight: bold;
+        }
+
+        /* Hero Section */
+        .hero {
+            height: 100vh;
+            background: linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.4)), url('https://images.unsplash.com/photo-1506905925346-21bda4d32df4?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80');
+            background-size: cover;
+            background-position: center;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            margin-top: 80px;
+        }
+
+        .hero-content {
+            text-align: center;
+            color: white;
+            max-width: 800px;
+        }
+
+        .hero h1 {
+            font-size: 3.5rem;
+            margin-bottom: 1rem;
+            opacity: 0;
+            animation: fadeInUp 1s ease forwards;
+        }
+
+        .hero p {
+            font-size: 1.2rem;
+            margin-bottom: 2rem;
+            opacity: 0;
+            animation: fadeInUp 1s ease 0.3s forwards;
+        }
+
+        .search-form {
+            background: white;
+            padding: 2rem;
+            border-radius: 10px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+            opacity: 0;
+            animation: fadeInUp 1s ease 0.6s forwards;
+        }
+
+        .search-row {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            margin-bottom: 1rem;
+        }
+
+        .search-field {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .search-field label {
+            color: #666;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+        }
+
+        .search-field input, .search-field select {
+            padding: 0.8rem;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 1rem;
+        }
+
+        .search-btn {
+            background: #C41E3A;
+            color: white;
+            padding: 1rem 2rem;
+            border: none;
+            border-radius: 5px;
+            font-size: 1.1rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .search-btn:hover {
+            background: #a01729;
+            transform: translateY(-2px);
+        }
+
+        /* Features Section */
+        .features {
+            padding: 5rem 0;
+            background: #f8f9fa;
+        }
+
+        .section-title {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        .section-title h2 {
+            font-size: 2.5rem;
+            color: #333;
+            margin-bottom: 1rem;
+        }
+
+        .section-title p {
+            color: #666;
+            font-size: 1.1rem;
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+
+        .feature-card {
+            background: white;
+            padding: 2rem;
+            border-radius: 10px;
+            text-align: center;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            transition: all 0.3s ease;
+            opacity: 0;
+            transform: translateY(30px);
+        }
+
+        .feature-card.animate {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .feature-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0,0,0,0.15);
+        }
+
+        .feature-icon {
+            font-size: 3rem;
+            color: #C41E3A;
+            margin-bottom: 1rem;
+        }
+
+        .feature-card h3 {
+            font-size: 1.3rem;
+            margin-bottom: 1rem;
+            color: #333;
+        }
+
+        .feature-card p {
+            color: #666;
+            line-height: 1.6;
+        }
+
+        /* Packages Section */
+        .packages {
+            padding: 5rem 0;
+        }
+
+        .packages-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 2rem;
+        }
+
+        .package-card {
+            background: white;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+            transition: all 0.3s ease;
+            opacity: 0;
+            transform: translateY(30px);
+        }
+
+        .package-card.animate {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .package-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.15);
+        }
+
+        .package-image {
+            height: 250px;
+            background-size: cover;
+            background-position: center;
+            position: relative;
+        }
+
+        .package-badge {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background: #C41E3A;
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            font-weight: bold;
+        }
+
+        .package-content {
+            padding: 1.5rem;
+        }
+
+        .package-title {
+            font-size: 1.3rem;
+            font-weight: bold;
+            margin-bottom: 0.5rem;
+            color: #333;
+        }
+
+        .package-location {
+            color: #666;
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .package-price {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: #C41E3A;
+            margin-bottom: 1rem;
+        }
+
+        .package-btn {
+            background: #C41E3A;
+            color: white;
+            padding: 0.8rem 1.5rem;
+            border: none;
+            border-radius: 25px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            width: 100%;
+        }
+
+        .package-btn:hover {
+            background: #a01729;
+            transform: translateY(-2px);
+        }
+
+        /* Destinations Section */
+        .destinations {
+            padding: 5rem 0;
+            background: #f8f9fa;
+        }
+
+        .destinations-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1rem;
+        }
+
+        .destination-card {
+            height: 200px;
+            border-radius: 15px;
+            background-size: cover;
+            background-position: center;
+            position: relative;
+            overflow: hidden;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            opacity: 0;
+            transform: scale(0.9);
+        }
+
+        .destination-card.animate {
+            opacity: 1;
+            transform: scale(1);
+        }
+
+        .destination-card:hover {
+            transform: scale(1.05);
+        }
+
+        .destination-overlay {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: linear-gradient(transparent, rgba(0,0,0,0.8));
+            color: white;
+            padding: 1.5rem;
+            transform: translateY(100%);
+            transition: all 0.3s ease;
+        }
+
+        .destination-card:hover .destination-overlay {
+            transform: translateY(0);
+        }
+
+        /* Testimonials Section */
+        .testimonials {
+            padding: 5rem 0;
+        }
+
+        .testimonials-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+
+        .testimonial-card {
+            background: white;
+            padding: 2rem;
+            border-radius: 15px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+            text-align: center;
+            transition: all 0.3s ease;
+            opacity: 0;
+            transform: translateY(30px);
+        }
+
+        .testimonial-card.animate {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .testimonial-avatar {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            margin: 0 auto 1rem;
+            background-size: cover;
+            background-position: center;
+        }
+
+        .testimonial-text {
+            font-style: italic;
+            margin-bottom: 1rem;
+            color: #666;
+        }
+
+        .testimonial-author {
+            font-weight: bold;
+            color: #333;
+        }
+
+        /* CTA Section */
+        .cta {
+            background: linear-gradient(135deg, #C41E3A, #a01729);
+            color: white;
+            padding: 5rem 0;
+            text-align: center;
+        }
+
+        .cta h2 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .cta p {
+            font-size: 1.2rem;
+            margin-bottom: 2rem;
+        }
+
+        .cta-btn {
+            background: white;
+            color: #C41E3A;
+            padding: 1rem 2rem;
+            border: none;
+            border-radius: 30px;
+            font-size: 1.1rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .cta-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+        }
+
+        /* Footer */
+        .footer {
+            background: #2c3e50;
+            color: white;
+            padding: 3rem 0 1rem;
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .footer-section h3 {
+            margin-bottom: 1rem;
+            color: #C41E3A;
+        }
+
+        .footer-section ul {
+            list-style: none;
+        }
+
+        .footer-section ul li {
+            margin-bottom: 0.5rem;
+        }
+
+        .footer-section ul li a {
+            color: #bdc3c7;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .footer-section ul li a:hover {
+            color: white;
+        }
+
+        .footer-bottom {
+            border-top: 1px solid #34495e;
+            padding-top: 1rem;
+            text-align: center;
+            color: #bdc3c7;
+        }
+
+        /* Animations */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes pulse {
+            0%, 100% {
+                transform: scale(1);
+            }
+            50% {
+                transform: scale(1.05);
+            }
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .nav-menu {
+                display: none;
+            }
+            
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+            
+            .search-row {
+                grid-template-columns: 1fr;
+            }
+            
+            .section-title h2 {
+                font-size: 2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div id="app">
+        <!-- Header -->
+        <header class="header" :class="{ 'scrolled': scrolled }">
+            <div class="container">
+                <nav class="nav">
+                    <div class="logo">
+                        <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Namaste%20Travel%20Logo.jpg-e5wT50e0w2jU9MHfGvA9gIbZ4BXHI4.jpeg" alt="Namaste Travel Logo">
+                        <span class="logo-text">Namaste Travel</span>
+                    </div>
+                    <ul class="nav-menu">
+                        <li><a href="#home">Home</a></li>
+                        <li><a href="#packages">Packages</a></li>
+                        <li><a href="#destinations">Destinations</a></li>
+                        <li><a href="#about">About</a></li>
+                        <li><a href="#contact">Contact</a></li>
+                    </ul>
+                    <div class="contact-info">
+                        <i class="fas fa-phone"></i>
+                        <span>+1 (555) 123-4567</span>
+                    </div>
+                </nav>
+            </div>
+        </header>
+
+        <!-- Hero Section -->
+        <section id="home" class="hero">
+            <div class="container">
+                <div class="hero-content">
+                    <h1>Discover Amazing Places</h1>
+                    <p>Experience the world's most beautiful destinations with Namaste Travel</p>
+                    
+                    <div class="search-form">
+                        <div class="search-row">
+                            <div class="search-field">
+                                <label>Destination</label>
+                                <input type="text" placeholder="Where do you want to go?" v-model="searchForm.destination">
+                            </div>
+                            <div class="search-field">
+                                <label>Check In</label>
+                                <input type="date" v-model="searchForm.checkin">
+                            </div>
+                            <div class="search-field">
+                                <label>Check Out</label>
+                                <input type="date" v-model="searchForm.checkout">
+                            </div>
+                            <div class="search-field">
+                                <label>Guests</label>
+                                <select v-model="searchForm.guests">
+                                    <option value="1">1 Guest</option>
+                                    <option value="2">2 Guests</option>
+                                    <option value="3">3 Guests</option>
+                                    <option value="4">4+ Guests</option>
+                                </select>
+                            </div>
+                        </div>
+                        <button class="search-btn" @click="searchPackages">
+                            <i class="fas fa-search"></i> Search Packages
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Features Section -->
+        <section class="features">
+            <div class="container">
+                <div class="section-title">
+                    <h2>Why Choose Namaste Travel</h2>
+                    <p>We provide exceptional travel experiences with personalized service</p>
+                </div>
+                <div class="features-grid">
+                    <div class="feature-card" v-for="(feature, index) in features" :key="index" 
+                         :class="{ animate: feature.visible }" ref="featureCards">
+                        <div class="feature-icon">
+                            <i :class="feature.icon"></i>
+                        </div>
+                        <h3>{{ feature.title }}</h3>
+                        <p>{{ feature.description }}</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Packages Section -->
+        <section id="packages" class="packages">
+            <div class="container">
+                <div class="section-title">
+                    <h2>Featured Packages</h2>
+                    <p>Discover our most popular travel packages</p>
+                </div>
+                <div class="packages-grid">
+                    <div class="package-card" v-for="(pkg, index) in packages" :key="index"
+                         :class="{ animate: pkg.visible }" ref="packageCards">
+                        <div class="package-image" :style="{ backgroundImage: `url(${pkg.image})` }">
+                            <div class="package-badge">{{ pkg.badge }}</div>
+                        </div>
+                        <div class="package-content">
+                            <h3 class="package-title">{{ pkg.title }}</h3>
+                            <div class="package-location">
+                                <i class="fas fa-map-marker-alt"></i>
+                                <span>{{ pkg.location }}</span>
+                            </div>
+                            <div class="package-price">${{ pkg.price }}</div>
+                            <button class="package-btn" @click="bookPackage(pkg)">Book Now</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Destinations Section -->
+        <section id="destinations" class="destinations">
+            <div class="container">
+                <div class="section-title">
+                    <h2>Popular Destinations</h2>
+                    <p>Explore the world's most amazing places</p>
+                </div>
+                <div class="destinations-grid">
+                    <div class="destination-card" v-for="(dest, index) in destinations" :key="index"
+                         :style="{ backgroundImage: `url(${dest.image})` }"
+                         :class="{ animate: dest.visible }" ref="destinationCards">
+                        <div class="destination-overlay">
+                            <h3>{{ dest.name }}</h3>
+                            <p>{{ dest.description }}</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Testimonials Section -->
+        <section class="testimonials">
+            <div class="container">
+                <div class="section-title">
+                    <h2>What Our Customers Say</h2>
+                    <p>Real experiences from real travelers</p>
+                </div>
+                <div class="testimonials-grid">
+                    <div class="testimonial-card" v-for="(testimonial, index) in testimonials" :key="index"
+                         :class="{ animate: testimonial.visible }" ref="testimonialCards">
+                        <div class="testimonial-avatar" :style="{ backgroundImage: `url(${testimonial.avatar})` }"></div>
+                        <p class="testimonial-text">"{{ testimonial.text }}"</p>
+                        <div class="testimonial-author">{{ testimonial.author }}</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- CTA Section -->
+        <section class="cta">
+            <div class="container">
+                <h2>Ready for Your Next Adventure?</h2>
+                <p>Let us help you create unforgettable memories</p>
+                <button class="cta-btn" @click="startPlanning">Start Planning Your Trip</button>
+            </div>
+        </section>
+
+        <!-- Footer -->
+        <footer class="footer">
+            <div class="container">
+                <div class="footer-content">
+                    <div class="footer-section">
+                        <h3>Namaste Travel</h3>
+                        <p>Your trusted partner for amazing travel experiences around the world.</p>
+                        <div style="margin-top: 1rem;">
+                            <i class="fab fa-facebook" style="margin-right: 1rem; font-size: 1.5rem;"></i>
+                            <i class="fab fa-twitter" style="margin-right: 1rem; font-size: 1.5rem;"></i>
+                            <i class="fab fa-instagram" style="margin-right: 1rem; font-size: 1.5rem;"></i>
+                        </div>
+                    </div>
+                    <div class="footer-section">
+                        <h3>Quick Links</h3>
+                        <ul>
+                            <li><a href="#home">Home</a></li>
+                            <li><a href="#packages">Packages</a></li>
+                            <li><a href="#destinations">Destinations</a></li>
+                            <li><a href="#about">About Us</a></li>
+                        </ul>
+                    </div>
+                    <div class="footer-section">
+                        <h3>Services</h3>
+                        <ul>
+                            <li><a href="#">Flight Booking</a></li>
+                            <li><a href="#">Hotel Reservation</a></li>
+                            <li><a href="#">Tour Packages</a></li>
+                            <li><a href="#">Travel Insurance</a></li>
+                        </ul>
+                    </div>
+                    <div class="footer-section">
+                        <h3>Contact Info</h3>
+                        <ul>
+                            <li><i class="fas fa-phone"></i> +1 (555) 123-4567</li>
+                            <li><i class="fas fa-envelope"></i> info@namastetravel.com</li>
+                            <li><i class="fas fa-map-marker-alt"></i> 123 Travel Street, City, State</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="footer-bottom">
+                    <p>&copy; 2024 Namaste Travel & Tourism LLC. All rights reserved.</p>
+                </div>
+            </div>
+        </footer>
+    </div>
+
+    <script>
+        const { createApp } = Vue;
+
+        createApp({
+            data() {
+                return {
+                    scrolled: false,
+                    searchForm: {
+                        destination: '',
+                        checkin: '',
+                        checkout: '',
+                        guests: '2'
+                    },
+                    features: [
+                        {
+                            icon: 'fas fa-globe-americas',
+                            title: 'Global Destinations',
+                            description: 'Explore amazing destinations across all continents with our expert guidance.',
+                            visible: false
+                        },
+                        {
+                            icon: 'fas fa-shield-alt',
+                            title: 'Safe & Secure',
+                            description: 'Your safety is our priority. We ensure secure and worry-free travel experiences.',
+                            visible: false
+                        },
+                        {
+                            icon: 'fas fa-headset',
+                            title: '24/7 Support',
+                            description: 'Round-the-clock customer support to assist you throughout your journey.',
+                            visible: false
+                        },
+                        {
+                            icon: 'fas fa-tags',
+                            title: 'Best Prices',
+                            description: 'Competitive pricing with no hidden fees. Get the best value for your money.',
+                            visible: false
+                        },
+                        {
+                            icon: 'fas fa-users',
+                            title: 'Expert Guides',
+                            description: 'Professional local guides who know the best spots and hidden gems.',
+                            visible: false
+                        },
+                        {
+                            icon: 'fas fa-heart',
+                            title: 'Personalized Service',
+                            description: 'Customized travel plans tailored to your preferences and interests.',
+                            visible: false
+                        }
+                    ],
+                    packages: [
+                        {
+                            title: 'Tropical Paradise',
+                            location: 'Maldives',
+                            price: '2,499',
+                            badge: 'Popular',
+                            image: 'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80',
+                            visible: false
+                        },
+                        {
+                            title: 'Cultural Heritage',
+                            location: 'India',
+                            price: '1,299',
+                            badge: 'Best Value',
+                            image: 'https://images.unsplash.com/photo-1524492412937-b28074a5d7da?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80',
+                            visible: false
+                        },
+                        {
+                            title: 'Mountain Adventure',
+                            location: 'Nepal',
+                            price: '1,899',
+                            badge: 'Adventure',
+                            image: 'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80',
+                            visible: false
+                        }
+                    ],
+                    destinations: [
+                        {
+                            name: 'Bali, Indonesia',
+                            description: 'Tropical paradise with stunning beaches',
+                            image: 'https://images.unsplash.com/photo-1537953773345-d172ccf13cf1?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80',
+                            visible: false
+                        },
+                        {
+                            name: 'Tokyo, Japan',
+                            description: 'Modern city with rich culture',
+                            image: 'https://images.unsplash.com/photo-1540959733332-eab4deabeeaf?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80',
+                            visible: false
+                        },
+                        {
+                            name: 'Paris, France',
+                            description: 'City of love and romance',
+                            image: 'https://images.unsplash.com/photo-1502602898536-47ad22581b52?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80',
+                            visible: false
+                        },
+                        {
+                            name: 'Dubai, UAE',
+                            description: 'Luxury and modern architecture',
+                            image: 'https://images.unsplash.com/photo-1512453979798-5ea266f8880c?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80',
+                            visible: false
+                        },
+                        {
+                            name: 'New York, USA',
+                            description: 'The city that never sleeps',
+                            image: 'https://images.unsplash.com/photo-1496442226666-8d4d0e62e6e9?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80',
+                            visible: false
+                        },
+                        {
+                            name: 'Sydney, Australia',
+                            description: 'Iconic harbor and opera house',
+                            image: 'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80',
+                            visible: false
+                        }
+                    ],
+                    testimonials: [
+                        {
+                            text: 'Amazing experience! The team at Namaste Travel made our honeymoon unforgettable.',
+                            author: 'Sarah & John',
+                            avatar: 'https://images.unsplash.com/photo-1494790108755-2616b612b786?ixlib=rb-4.0.3&auto=format&fit=crop&w=150&q=80',
+                            visible: false
+                        },
+                        {
+                            text: 'Professional service and attention to detail. Highly recommended for family trips.',
+                            author: 'Michael Chen',
+                            avatar: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?ixlib=rb-4.0.3&auto=format&fit=crop&w=150&q=80',
+                            visible: false
+                        },
+                        {
+                            text: 'Best travel agency ever! They handled everything perfectly from start to finish.',
+                            author: 'Emma Wilson',
+                            avatar: 'https://images.unsplash.com/photo-1438761681033-6461ffad8d80?ixlib=rb-4.0.3&auto=format&fit=crop&w=150&q=80',
+                            visible: false
+                        }
+                    ]
+                }
+            },
+            mounted() {
+                window.addEventListener('scroll', this.handleScroll);
+                this.setupIntersectionObserver();
+            },
+            methods: {
+                handleScroll() {
+                    this.scrolled = window.scrollY > 50;
+                },
+                setupIntersectionObserver() {
+                    const observer = new IntersectionObserver((entries) => {
+                        entries.forEach(entry => {
+                            if (entry.isIntersecting) {
+                                const index = Array.from(entry.target.parentNode.children).indexOf(entry.target);
+                                
+                                if (entry.target.classList.contains('feature-card')) {
+                                    setTimeout(() => {
+                                        this.features[index].visible = true;
+                                    }, index * 200);
+                                } else if (entry.target.classList.contains('package-card')) {
+                                    setTimeout(() => {
+                                        this.packages[index].visible = true;
+                                    }, index * 200);
+                                } else if (entry.target.classList.contains('destination-card')) {
+                                    setTimeout(() => {
+                                        this.destinations[index].visible = true;
+                                    }, index * 100);
+                                } else if (entry.target.classList.contains('testimonial-card')) {
+                                    setTimeout(() => {
+                                        this.testimonials[index].visible = true;
+                                    }, index * 200);
+                                }
+                            }
+                        });
+                    }, { threshold: 0.1 });
+
+                    this.$nextTick(() => {
+                        if (this.$refs.featureCards) {
+                            this.$refs.featureCards.forEach(card => observer.observe(card));
+                        }
+                        if (this.$refs.packageCards) {
+                            this.$refs.packageCards.forEach(card => observer.observe(card));
+                        }
+                        if (this.$refs.destinationCards) {
+                            this.$refs.destinationCards.forEach(card => observer.observe(card));
+                        }
+                        if (this.$refs.testimonialCards) {
+                            this.$refs.testimonialCards.forEach(card => observer.observe(card));
+                        }
+                    });
+                },
+                searchPackages() {
+                    alert('Searching for packages... This would connect to your booking system!');
+                },
+                bookPackage(pkg) {
+                    alert(`Booking ${pkg.title} package for $${pkg.price}. This would redirect to booking form!`);
+                },
+                startPlanning() {
+                    alert('Starting trip planning... This would open a contact form or booking wizard!');
+                }
+            }
+        }).mount('#app');
+    </script>
+</body>
+</html>
