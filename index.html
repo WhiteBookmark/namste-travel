@@ -392,6 +392,60 @@
 				transform: translateY(-2px);
 			}
 
+			/* Services Section */
+			.services {
+				padding: 5rem 0;
+				background: white;
+			}
+
+			.services-grid {
+				display: grid;
+				grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+				gap: 2rem;
+			}
+
+			.service-card {
+				background: #f8f9fa;
+				padding: 2rem;
+				border-radius: 15px;
+				text-align: center;
+				box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
+				transition: all 0.3s ease;
+				opacity: 0;
+				transform: translateY(30px);
+				border: 2px solid transparent;
+			}
+
+			.service-card.animate {
+				opacity: 1;
+				transform: translateY(0);
+			}
+
+			.service-card:hover {
+				transform: translateY(-10px);
+				box-shadow: 0 15px 30px rgba(0, 0, 0, 0.15);
+				border-color: #c41e3a;
+				background: white;
+			}
+
+			.service-icon {
+				font-size: 3rem;
+				color: #c41e3a;
+				margin-bottom: 1rem;
+				animation: pulse 2s infinite;
+			}
+
+			.service-card h3 {
+				font-size: 1.3rem;
+				margin-bottom: 1rem;
+				color: #333;
+			}
+
+			.service-card p {
+				color: #666;
+				line-height: 1.6;
+			}
+
 			/* Features Section */
 			.features {
 				padding: 5rem 0;
@@ -922,6 +976,7 @@
 						</a>
 						<ul class="nav-menu">
 							<li><a @click="goHome">Home</a></li>
+							<li><a @click="scrollToSection('services')">Services</a></li>
 							<li><a @click="scrollToSection('packages')">Packages</a></li>
 							<li><a @click="scrollToSection('destinations')">Destinations</a></li>
 							<li><a href="about.html">About</a></li>
@@ -973,6 +1028,25 @@
 									</div>
 								</div>
 								<button class="search-btn" @click="searchPackages"><i class="fas fa-search"></i> Search Packages</button>
+							</div>
+						</div>
+					</div>
+				</section>
+
+				<!-- Services Section -->
+				<section id="services" class="services">
+					<div class="container">
+						<div class="section-title">
+							<h2>Our Services</h2>
+							<p>Complete travel solutions for all your needs</p>
+						</div>
+						<div class="services-grid">
+							<div class="service-card" v-for="(service, index) in services" :key="index" :class="{ animate: service.visible }" ref="serviceCards">
+								<div class="service-icon">
+									<i :class="service.icon"></i>
+								</div>
+								<h3>{{ service.title }}</h3>
+								<p>{{ service.description }}</p>
 							</div>
 						</div>
 					</div>
@@ -1137,6 +1211,7 @@
 							<h3>Quick Links</h3>
 							<ul>
 								<li><a @click="goHome">Home</a></li>
+								<li><a @click="scrollToSection('services')">Services</a></li>
 								<li><a @click="scrollToSection('packages')">Packages</a></li>
 								<li><a @click="scrollToSection('destinations')">Destinations</a></li>
 							</ul>
@@ -1186,6 +1261,44 @@
 							branch: 'main',
 							folder: 'travel-packages', // Folder where markdown files are stored
 						},
+						services: [
+							{
+								icon: 'fas fa-plane',
+								title: 'Airline Tickets',
+								description: 'Book domestic and international flights with the best deals and flexible options.',
+								visible: false,
+							},
+							{
+								icon: 'fas fa-bed',
+								title: 'Hotel Bookings',
+								description: 'Reserve accommodations worldwide, from budget to luxury hotels.',
+								visible: false,
+							},
+							{
+								icon: 'fas fa-bus',
+								title: 'Airport Transfers',
+								description: 'Reliable transportation to and from airports around the globe.',
+								visible: false,
+							},
+							{
+								icon: 'fas fa-passport',
+								title: 'Visa Assistance',
+								description: 'Support for visa applications to make your travel seamless.',
+								visible: false,
+							},
+							{
+								icon: 'fas fa-shield-alt',
+								title: 'Travel Insurance',
+								description: 'Coverage for medical emergencies, trip cancellations, and more.',
+								visible: false,
+							},
+							{
+								icon: 'fas fa-map-marked-alt',
+								title: 'UAE Attractions',
+								description: 'Curated packages to explore the top attractions in the UAE.',
+								visible: false,
+							},
+						],
 						features: [
 							{
 								icon: 'fas fa-globe-americas',
@@ -1407,6 +1520,7 @@
 
 					resetAnimations() {
 						// Reset all animation states
+						this.services.forEach((service) => (service.visible = false));
 						this.features.forEach((feature) => (feature.visible = false));
 						this.packages.forEach((pkg) => (pkg.visible = false));
 						this.destinations.forEach((dest) => (dest.visible = false));
@@ -1595,7 +1709,11 @@ Sorry, the package details for "${packageId}" are not available at the moment.`;
 									if (entry.isIntersecting) {
 										const index = Array.from(entry.target.parentNode.children).indexOf(entry.target);
 
-										if (entry.target.classList.contains('feature-card')) {
+										if (entry.target.classList.contains('service-card')) {
+											setTimeout(() => {
+												this.services[index].visible = true;
+											}, index * 200);
+										} else if (entry.target.classList.contains('feature-card')) {
 											setTimeout(() => {
 												this.features[index].visible = true;
 											}, index * 200);
@@ -1619,6 +1737,9 @@ Sorry, the package details for "${packageId}" are not available at the moment.`;
 						);
 
 						this.$nextTick(() => {
+							if (this.$refs.serviceCards) {
+								this.$refs.serviceCards.forEach((card) => observer.observe(card));
+							}
 							if (this.$refs.featureCards) {
 								this.$refs.featureCards.forEach((card) => observer.observe(card));
 							}
