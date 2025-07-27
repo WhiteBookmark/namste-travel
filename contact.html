@@ -1,0 +1,377 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact Us - Namaste Travel & Tourism LLC</title>
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#C41E3A',
+                        'primary-dark': '#a01729',
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="font-sans">
+    <div id="app">
+        <!-- Header -->
+        <header class="fixed w-full top-0 z-50 bg-white shadow-lg">
+            <div class="max-w-7xl mx-auto px-4">
+                <nav class="flex justify-between items-center py-4">
+                    <a href="index.html" class="flex items-center gap-3 hover:opacity-80 transition-opacity">
+                        <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Namaste%20Travel%20Logo.jpg-5f3hlNHbc7bExyVDcCAV30Vp0uRRrH.jpeg" alt="Namaste Travel Logo" class="h-12 w-auto rounded-full">
+                        <span class="text-xl font-bold text-primary">Namaste Travel</span>
+                    </a>
+
+                    <ul class="hidden md:flex items-center gap-8">
+                        <li><a href="index.html" class="text-gray-700 hover:text-primary font-medium transition-colors">Home</a></li>
+                        <li><a href="index.html#packages" class="text-gray-700 hover:text-primary font-medium transition-colors">Packages</a></li>
+                        <li><a href="index.html#services" class="text-gray-700 hover:text-primary font-medium transition-colors">Services</a></li>
+                        <li><a href="about.html" class="text-gray-700 hover:text-primary font-medium transition-colors">About</a></li>
+                        <li><a href="contact.html" class="text-primary font-medium">Contact</a></li>
+                    </ul>
+
+                    <div class="flex items-center gap-4">
+                        <div class="hidden lg:flex items-center gap-2 text-primary font-semibold">
+                            <i class="fas fa-phone"></i>
+                            <span>+971 56 502 1191</span>
+                        </div>
+                    </div>
+                </nav>
+            </div>
+        </header>
+
+        <!-- Hero Section -->
+        <section class="pt-24 pb-12 bg-gradient-to-r from-primary to-primary-dark text-white">
+            <div class="max-w-7xl mx-auto px-4">
+                <div class="text-center">
+                    <nav class="text-sm mb-4">
+                        <a href="index.html" class="text-red-200 hover:text-white">Home</a>
+                        <span class="mx-2">/</span>
+                        <span class="text-white">Contact Us</span>
+                    </nav>
+                    <h1 class="text-5xl font-bold mb-4">Contact Us</h1>
+                    <p class="text-xl">Get in touch with our travel experts</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Contact Information -->
+        <section class="py-16">
+            <div class="max-w-6xl mx-auto px-4">
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-8 mb-16">
+                    <div class="text-center">
+                        <div class="w-16 h-16 bg-primary rounded-full flex items-center justify-center mx-auto mb-4">
+                            <i class="fas fa-phone text-white text-xl"></i>
+                        </div>
+                        <h3 class="text-xl font-semibold text-gray-800 mb-2">Phone</h3>
+                        <p class="text-gray-600">+971 56 502 1191</p>
+                        <p class="text-gray-600">04-3555053</p>
+                    </div>
+
+                    <div class="text-center">
+                        <div class="w-16 h-16 bg-primary rounded-full flex items-center justify-center mx-auto mb-4">
+                            <i class="fas fa-envelope text-white text-xl"></i>
+                        </div>
+                        <h3 class="text-xl font-semibold text-gray-800 mb-2">Email</h3>
+                        <p class="text-gray-600">namastetraveldxb@gmail.com</p>
+                        <p class="text-gray-600">info@namastetravel.com</p>
+                    </div>
+
+                    <div class="text-center">
+                        <div class="w-16 h-16 bg-primary rounded-full flex items-center justify-center mx-auto mb-4">
+                            <i class="fas fa-map-marker-alt text-white text-xl"></i>
+                        </div>
+                        <h3 class="text-xl font-semibold text-gray-800 mb-2">Address</h3>
+                        <p class="text-gray-600">Al Suq St - Bur Dubai</p>
+                        <p class="text-gray-600">Al Fahidi - Dubai, UAE</p>
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-12">
+                    <!-- Contact Form -->
+                    <div class="bg-white p-8 rounded-xl shadow-lg">
+                        <h2 class="text-2xl font-bold text-gray-800 mb-6">Send us a Message</h2>
+                        <form @submit.prevent="submitForm" class="space-y-6">
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                <div>
+                                    <label class="block text-gray-700 font-medium mb-2">Name *</label>
+                                    <input type="text" required v-model="formData.name" 
+                                           class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent" 
+                                           placeholder="Your full name">
+                                </div>
+                                <div>
+                                    <label class="block text-gray-700 font-medium mb-2">Email *</label>
+                                    <input type="email" required v-model="formData.email" 
+                                           class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent" 
+                                           placeholder="your@email.com">
+                                </div>
+                            </div>
+
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                <div>
+                                    <label class="block text-gray-700 font-medium mb-2">Phone</label>
+                                    <input type="tel" v-model="formData.phone" 
+                                           class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent" 
+                                           placeholder="+971 XX XXX XXXX">
+                                </div>
+                                <div>
+                                    <label class="block text-gray-700 font-medium mb-2">Subject</label>
+                                    <select v-model="formData.subject" 
+                                            class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent">
+                                        <option value="">Select a subject</option>
+                                        <option value="General Inquiry">General Inquiry</option>
+                                        <option value="Package Booking">Package Booking</option>
+                                        <option value="Flight Booking">Flight Booking</option>
+                                        <option value="Hotel Reservation">Hotel Reservation</option>
+                                        <option value="Visa Assistance">Visa Assistance</option>
+                                        <option value="Travel Insurance">Travel Insurance</option>
+                                        <option value="Other">Other</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div>
+                                <label class="block text-gray-700 font-medium mb-2">Message *</label>
+                                <textarea required rows="5" v-model="formData.message" 
+                                          class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent" 
+                                          placeholder="Tell us about your travel plans or questions..."></textarea>
+                            </div>
+
+                            <button type="submit" 
+                                    class="w-full bg-primary text-white py-3 px-6 rounded-lg font-semibold hover:bg-primary-dark transition-colors">
+                                <i class="fab fa-whatsapp mr-2"></i>Send via WhatsApp
+                            </button>
+                        </form>
+                    </div>
+
+                    <!-- Destinations List -->
+                    <div class="bg-gray-50 p-8 rounded-xl">
+                        <h2 class="text-2xl font-bold text-gray-800 mb-6">Popular Destinations</h2>
+                        <p class="text-gray-600 mb-6">We offer travel services to these amazing destinations and many more:</p>
+
+                        <div class="grid grid-cols-2 gap-3">
+                            <div v-for="destination in destinations" :key="destination" 
+                                 class="flex items-center p-3 bg-white rounded-lg shadow-sm hover:shadow-md transition-shadow">
+                                <i class="fas fa-map-marker-alt text-primary mr-3"></i>
+                                <span class="text-gray-700 font-medium">{{ destination }}</span>
+                            </div>
+                        </div>
+
+                        <div class="mt-6 p-4 bg-red-50 rounded-lg">
+                            <p class="text-red-800 font-medium">
+                                <i class="fas fa-info-circle mr-2"></i>
+                                Don't see your destination? Contact us! We offer services to many more locations worldwide.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Quick Contact Options -->
+        <section class="py-16 bg-gray-50">
+            <div class="max-w-6xl mx-auto px-4">
+                <div class="text-center mb-12">
+                    <h2 class="text-3xl font-bold text-gray-800 mb-4">Quick Contact Options</h2>
+                    <p class="text-xl text-gray-600">Choose the most convenient way to reach us</p>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                    <div class="bg-white p-6 rounded-xl shadow-lg text-center hover:shadow-xl transition-shadow">
+                        <div class="w-16 h-16 bg-green-500 rounded-full flex items-center justify-center mx-auto mb-4">
+                            <i class="fab fa-whatsapp text-white text-2xl"></i>
+                        </div>
+                        <h3 class="text-xl font-semibold text-gray-800 mb-3">WhatsApp</h3>
+                        <p class="text-gray-600 mb-4">Get instant responses to your travel queries</p>
+                        <a href="https://wa.me/971565021191" target="_blank" 
+                           class="bg-green-500 text-white px-6 py-2 rounded-full hover:bg-green-600 transition-colors">
+                            Chat Now
+                        </a>
+                    </div>
+
+                    <div class="bg-white p-6 rounded-xl shadow-lg text-center hover:shadow-xl transition-shadow">
+                        <div class="w-16 h-16 bg-blue-500 rounded-full flex items-center justify-center mx-auto mb-4">
+                            <i class="fas fa-phone text-white text-2xl"></i>
+                        </div>
+                        <h3 class="text-xl font-semibold text-gray-800 mb-3">Phone Call</h3>
+                        <p class="text-gray-600 mb-4">Speak directly with our travel experts</p>
+                        <a href="tel:+971565021191" 
+                           class="bg-blue-500 text-white px-6 py-2 rounded-full hover:bg-blue-600 transition-colors">
+                            Call Now
+                        </a>
+                    </div>
+
+                    <div class="bg-white p-6 rounded-xl shadow-lg text-center hover:shadow-xl transition-shadow">
+                        <div class="w-16 h-16 bg-red-500 rounded-full flex items-center justify-center mx-auto mb-4">
+                            <i class="fas fa-envelope text-white text-2xl"></i>
+                        </div>
+                        <h3 class="text-xl font-semibold text-gray-800 mb-3">Email</h3>
+                        <p class="text-gray-600 mb-4">Send us detailed travel requirements</p>
+                        <a href="mailto:namastetraveldxb@gmail.com" 
+                           class="bg-red-500 text-white px-6 py-2 rounded-full hover:bg-red-600 transition-colors">
+                            Email Us
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Office Hours -->
+        <section class="py-16">
+            <div class="max-w-4xl mx-auto px-4 text-center">
+                <h2 class="text-3xl font-bold text-gray-800 mb-8">Office Hours</h2>
+                <div class="bg-white p-8 rounded-xl shadow-lg">
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                        <div>
+                            <h3 class="text-xl font-semibold text-gray-800 mb-4">Working Days</h3>
+                            <div class="space-y-2">
+                                <div class="flex justify-between">
+                                    <span class="text-gray-600">Monday - Friday</span>
+                                    <span class="font-medium">9:00 AM - 6:00 PM</span>
+                                </div>
+                                <div class="flex justify-between">
+                                    <span class="text-gray-600">Saturday</span>
+                                    <span class="font-medium">9:00 AM - 4:00 PM</span>
+                                </div>
+                                <div class="flex justify-between">
+                                    <span class="text-gray-600">Sunday</span>
+                                    <span class="font-medium text-primary">Closed</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div>
+                            <h3 class="text-xl font-semibold text-gray-800 mb-4">Emergency Support</h3>
+                            <p class="text-gray-600 mb-2">For urgent travel assistance:</p>
+                            <p class="font-medium text-primary">24/7 WhatsApp Support</p>
+                            <p class="text-sm text-gray-500 mt-2">
+                                We provide round-the-clock support for travelers in need of immediate assistance.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Footer -->
+        <footer class="bg-gray-800 text-white py-12">
+            <div class="max-w-7xl mx-auto px-4">
+                <div class="grid grid-cols-1 md:grid-cols-4 gap-8 mb-8">
+                    <div>
+                        <h3 class="text-xl font-bold mb-4">Namaste Travel</h3>
+                        <p class="text-gray-300 mb-4">Your trusted partner for amazing travel experiences around the world.</p>
+                        <div class="flex gap-4">
+                            <a href="https://www.facebook.com/namastetravel.net/" target="_blank" class="text-gray-300 hover:text-white text-xl">
+                                <i class="fab fa-facebook"></i>
+                            </a>
+                            <a href="https://x.com/llc_namaste?lang=cs" target="_blank" class="text-gray-300 hover:text-white text-xl">
+                                <i class="fab fa-twitter"></i>
+                            </a>
+                            <a href="https://www.instagram.com/namastetraveldxb/?hl=en" target="_blank" class="text-gray-300 hover:text-white text-xl">
+                                <i class="fab fa-instagram"></i>
+                            </a>
+                        </div>
+                    </div>
+
+                    <div>
+                        <h3 class="text-xl font-bold mb-4">Quick Links</h3>
+                        <ul class="space-y-2">
+                            <li><a href="index.html" class="text-gray-300 hover:text-white">Home</a></li>
+                            <li><a href="about.html" class="text-gray-300 hover:text-white">About Us</a></li>
+                            <li><a href="index.html#services" class="text-gray-300 hover:text-white">Services</a></li>
+                            <li><a href="contact.html" class="text-gray-300 hover:text-white">Contact</a></li>
+                        </ul>
+                    </div>
+
+                    <div>
+                        <h3 class="text-xl font-bold mb-4">Services</h3>
+                        <ul class="space-y-2">
+                            <li><span class="text-gray-300">Flight Booking</span></li>
+                            <li><span class="text-gray-300">Hotel Reservation</span></li>
+                            <li><span class="text-gray-300">Tour Packages</span></li>
+                            <li><span class="text-gray-300">Travel Insurance</span></li>
+                        </ul>
+                    </div>
+
+                    <div>
+                        <h3 class="text-xl font-bold mb-4">Contact Info</h3>
+                        <ul class="space-y-2">
+                            <li class="flex items-center text-gray-300">
+                                <i class="fas fa-phone mr-2"></i>
+                                +971 56 502 1191
+                            </li>
+                            <li class="flex items-center text-gray-300">
+                                <i class="fas fa-envelope mr-2"></i>
+                                namastetraveldxb@gmail.com
+                            </li>
+                            <li class="flex items-start text-gray-300">
+                                <i class="fas fa-map-marker-alt mr-2 mt-1"></i>
+                                Al Suq St - Bur Dubai - Al Fahidi - Dubai
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="border-t border-gray-700 pt-8 text-center">
+                    <p class="text-gray-300">&copy; 2024 Namaste Travel & Tourism LLC. All rights reserved.</p>
+                </div>
+            </div>
+        </footer>
+    </div>
+
+    <script>
+        const { createApp } = Vue;
+
+        createApp({
+            data() {
+                return {
+                    formData: {
+                        name: '',
+                        email: '',
+                        phone: '',
+                        subject: '',
+                        message: ''
+                    },
+                    destinations: [
+                        'Angola', 'Benin', 'Cameroon', "Côte d'Ivoire", 
+                        'DRC (Democratic Republic of the Congo)', 'Egypt',
+                        'Ghana', 'Kenya', 'Morocco', 'Nigeria', 'South Africa',
+                        'Tanzania', 'Uganda', 'Zimbabwe', 'India', 'Nepal',
+                        'Sri Lanka', 'Maldives', 'Thailand', 'Malaysia',
+                        'Singapore', 'Indonesia', 'UAE', 'Saudi Arabia',
+                        'Qatar', 'Oman', 'Kuwait', 'Bahrain', 'Turkey',
+                        'Greece', 'Italy', 'France', 'Spain', 'Germany',
+                        'UK', 'USA', 'Canada', 'Australia', 'New Zealand',
+                        'Japan', 'South Korea'
+                    ]
+                }
+            },
+            methods: {
+                submitForm() {
+                    const message = `Hi! I'm contacting you through your website.
+
+Name: ${this.formData.name}
+Email: ${this.formData.email}
+Phone: ${this.formData.phone}
+Subject: ${this.formData.subject}
+
+Message:
+${this.formData.message}`;
+
+                    const whatsappUrl = `https://wa.me/971565021191?text=${encodeURIComponent(message)}`;
+                    window.open(whatsappUrl, '_blank');
+                }
+            }
+        }).mount('#app');
+    </script>
+</body>
+</html>
