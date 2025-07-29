@@ -37,7 +37,6 @@
 				z-index: 1000;
 				transition: all 0.3s ease;
 			}
-
 			.nav {
 				display: flex;
 				justify-content: space-between;
@@ -52,6 +51,7 @@
 				cursor: pointer;
 				text-decoration: none;
 				color: inherit;
+				flex-shrink: 0; /* Prevent logo from shrinking */
 			}
 
 			.logo:hover {
@@ -74,11 +74,11 @@
 			.logo:hover .logo-text {
 				color: #a01729;
 			}
-
 			.nav-menu {
 				display: flex;
 				list-style: none;
 				gap: 2rem;
+				margin: 0 1rem; /* Add margin on both sides */
 			}
 
 			.nav-menu a {
@@ -96,11 +96,25 @@
 			.contact-info {
 				display: flex;
 				align-items: center;
-				gap: 10px;
+				gap: 8px;
 				color: #c41e3a;
 				font-weight: bold;
 				cursor: pointer;
 				transition: color 0.3s ease;
+				font-size: 0.9rem; /* Slightly smaller font */
+				white-space: nowrap; /* Prevent wrapping */
+			}
+
+			.contact-info:first-of-type {
+				margin-left: 0; /* Remove margin from first contact info */
+			}
+
+			/* Container for both contact items */
+			.contact-section {
+				display: flex;
+				gap: 1rem;
+				align-items: center;
+				flex-shrink: 0; /* Prevent contact section from shrinking */
 			}
 
 			.contact-info:hover {
@@ -982,13 +996,15 @@
 							<li><a href="about.html">About</a></li>
 							<li><a href="contact.html">Contact</a></li>
 						</ul>
-						<div class="contact-info">
-							<i class="fas fa-phone"></i>
-							<span>04-3555053</span>
-						</div>
-						<div class="contact-info">
-							<i class="fas fa-envelope"></i>
-							<span>namastetraveldxb@gmail.com</span>
+						<div class="contact-section">
+							<div class="contact-info">
+								<i class="fas fa-phone"></i>
+								<span>04-3555053</span>
+							</div>
+							<div class="contact-info">
+								<i class="fas fa-envelope"></i>
+								<span>namastetraveldxb@gmail.com</span>
+							</div>
 						</div>
 					</nav>
 				</div>
@@ -1122,18 +1138,17 @@
 					</div>
 				</section>
 
-				<!-- Testimonials Section -->
+				<!-- Team Section -->
 				<section class="testimonials">
 					<div class="container">
 						<div class="section-title">
-							<h2>What Our Customers Say</h2>
-							<p>Real experiences from real travelers</p>
+							<h2>Meet Our Team!</h2>
 						</div>
 						<div class="testimonials-grid">
-							<div class="testimonial-card" v-for="(testimonial, index) in testimonials" :key="index" :class="{ animate: testimonial.visible }" ref="testimonialCards">
-								<div class="testimonial-avatar" :style="{ backgroundImage: `url(${testimonial.avatar})` }"></div>
-								<p class="testimonial-text">"{{ testimonial.text }}"</p>
-								<div class="testimonial-author">{{ testimonial.author }}</div>
+							<div class="testimonial-card" v-for="(member, index) in teamMembers" :key="index" :class="{ animate: member.visible }" ref="testimonialCards">
+								<div class="testimonial-avatar" :style="{ backgroundImage: `url(${member.image})` }"></div>
+								<div class="testimonial-author">{{ member.name }}</div>
+								<p class="testimonial-text">{{ member.position }}</p>
 							</div>
 						</div>
 					</div>
@@ -1443,23 +1458,35 @@
 								visible: false,
 							},
 						],
-						testimonials: [
+						teamMembers: [
 							{
-								text: 'Amazing experience! The team at Namaste Travel made our honeymoon unforgettable.',
-								author: 'Sarah Johnson',
-								avatar: 'https://images.unsplash.com/photo-1544005313-94ddf0286df2?ixlib=rb-4.0.3&auto=format&fit=crop&w=150&q=80',
+								name: 'Ekendra Bahadur Thapa',
+								position: 'CEO and Founder',
+								image: 'images/ceo.png',
 								visible: false,
 							},
 							{
-								text: 'Professional service and attention to detail. Highly recommended for family trips.',
-								author: 'Michael Chen',
-								avatar: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?ixlib=rb-4.0.3&auto=format&fit=crop&w=150&q=80',
+								name: 'Ashok Kumar Baniya',
+								position: 'Managing Director',
+								image: 'images/marketing-director-1.png',
 								visible: false,
 							},
 							{
-								text: 'Best travel agency ever! They handled everything perfectly from start to finish.',
-								author: 'Emma Wilson',
-								avatar: 'https://images.unsplash.com/photo-1438761681033-6461ffad8d80?ixlib=rb-4.0.3&auto=format&fit=crop&w=150&q=80',
+								name: 'Nani Kaji Aryal',
+								position: 'Managing Director',
+								image: 'images/marketing-director-2.png',
+								visible: false,
+							},
+							{
+								name: 'Dipesh Acharya',
+								position: 'Marketing Manager',
+								image: 'images/marketing-manager.png',
+								visible: false,
+							},
+							{
+								name: 'Suleman',
+								position: 'IT Team Leader and IT Consultant',
+								image: 'images/IT-Consultant.png',
 								visible: false,
 							},
 						],
@@ -1524,7 +1551,7 @@
 						this.features.forEach((feature) => (feature.visible = false));
 						this.packages.forEach((pkg) => (pkg.visible = false));
 						this.destinations.forEach((dest) => (dest.visible = false));
-						this.testimonials.forEach((testimonial) => (testimonial.visible = false));
+						this.teamMembers.forEach((member) => (member.visible = false));
 					},
 
 					scrollToSection(sectionId) {
@@ -1727,7 +1754,7 @@ Sorry, the package details for "${packageId}" are not available at the moment.`;
 											}, index * 100);
 										} else if (entry.target.classList.contains('testimonial-card')) {
 											setTimeout(() => {
-												this.testimonials[index].visible = true;
+												this.teamMembers[index].visible = true;
 											}, index * 200);
 										}
 									}
